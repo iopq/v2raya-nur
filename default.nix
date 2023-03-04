@@ -5,8 +5,8 @@
 , buildGoModule
 , makeWrapper
 , xray
-#, v2ray-geoip
-#, v2ray-domain-list-community
+, v2ray-geoip
+, v2ray-domain-list-community
 , symlinkJoin
 }:
 let
@@ -49,12 +49,11 @@ buildGoModule {
   postInstall = ''
     wrapProgram $out/bin/v2rayA \
       --prefix PATH ":" "${lib.makeBinPath [ xray ]}" \
-      '';
- #     --prefix XDG_DATA_DIRS ":" ${symlinkJoin {
- #       name = "assets";
- #       paths = [ v2ray-geoip v2ray-domain-list-community ];
- #     }}/share
- # '';
+      --prefix XDG_DATA_DIRS ":" ${symlinkJoin {
+        name = "assets";
+        paths = [ v2ray-geoip v2ray-domain-list-community ];
+      }}/share
+  '';
   meta = with lib; {
     description = "A Linux web GUI client of Project V which supports V2Ray, Xray, SS, SSR, Trojan and Pingtunnel";
     homepage = "https://github.com/v2rayA/v2rayA";
